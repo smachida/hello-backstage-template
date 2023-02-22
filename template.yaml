@@ -2,9 +2,9 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 # some metadata about the template itself
 metadata:
-  name: v1beta3-demo
+  name: hello-backstage-template
   title: Hello Backstage Template
-  description: scaffolder v1beta3 template demo
+  description: scaffolder 
 spec:
   owner: backstage/techdocs-core
   type: service
@@ -22,6 +22,13 @@ spec:
           ui:autofocus: true
           ui:options:
             rows: 5
+        owner: 
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+            catalogFilter:
+              kind: Group
     - title: Choose a location
       required:
         - repoUrl
@@ -65,3 +72,11 @@ spec:
       input:
         repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
         catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}
